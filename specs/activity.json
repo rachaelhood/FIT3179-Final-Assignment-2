@@ -1,0 +1,49 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "width": "container",
+  "height": 520,
+  "autosize": { "type": "fit-x", "contains": "padding", "resize": true },
+
+  "params": [
+    { "name": "yearAct", "value": 2018,
+      "bind": { "input": "range", "min": 2018, "max": 2019, "step": 1 } }
+  ],
+
+  "data": { "url": "data/SharkAttacks_Population_Merged.csv" },
+
+  "title": { "text": { "expr": "'Attacks by Activity — ' + yearAct" } },
+  "config": {
+    "title": {
+        "font": "Merriweather", 
+        "fontSize": 24,
+        "fontWeight": 700,
+        "color": "#114e8b"
+    }
+  },
+
+  "transform": [
+    { "calculate": "toNumber(datum['Year'])", "as": "YearN" },
+    { "filter": "datum.YearN == yearAct" },
+    { "calculate": "isValid(datum['Activity']) ? datum['Activity'] : 'Unknown'", "as": "ActivityN" },
+    { "aggregate": [{ "op": "count", "as": "Attacks" }], "groupby": ["ActivityN"] },
+    { "filter": "datum.Attacks > 0" }
+  ],
+
+  "mark": { "type": "bar", "cornerRadiusEnd": 3 },
+
+  "encoding": {
+    "y": { "field": "ActivityN", "type": "nominal", "sort": "-x", "title": "Activity" },
+    "x": { "field": "Attacks", "type": "quantitative", "title": "Count" },
+
+    "color": {
+      "field": "ActivityN", "type": "nominal",
+      "scale": { "scheme": "category20" },
+      "legend": null
+    },
+
+    "tooltip": [
+      { "field": "ActivityN", "title": "Activity" },
+      { "field": "Attacks", "title": "Count" }
+    ]
+  }
+}

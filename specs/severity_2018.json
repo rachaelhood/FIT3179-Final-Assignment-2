@@ -1,0 +1,21 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "width": "container",
+  "height": 360,
+  "data": {"url":"data/SharkAttacks_Population_Merged.csv"},
+  "title": "Monthly Injury Severity — 2018",
+  "transform": [
+  { "calculate": "toNumber(datum['Year'])", "as": "YearN" },
+  { "filter": "datum.YearN == 2018" },
+  { "aggregate": [{"op":"count","as":"Attacks"}], "groupby": ["Month ", "Injury Severity "] }
+  ],
+  "mark":{"type":"line","point":true},
+  "encoding":{
+    "x":{"field":"Month ","type":"ordinal",
+         "sort":["January","February","March","April","May","June","July","August","September","October","November","December"],
+         "title":"Month"},
+    "y":{"field":"Attacks","type":"quantitative"},
+    "color":{"field":"Injury Severity ","type":"nominal","title":"Injury Severity"},
+    "tooltip":[{"field":"Month ","title":"Month"},{"field":"Injury Severity ","title":"Severity"},{"field":"Attacks"}]
+  }
+}

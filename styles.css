@@ -1,0 +1,201 @@
+:root {
+  --bg: #0d2840;
+  --panel: #ffffff;
+  --ink: #1f2937;
+  --muted: #303339;
+  --accent: #00a7c2;
+  --shadow: 0 6px 20px rgba(0,0,0,.06);
+}
+
+/* ===== Global Typography ===== */
+
+/* Headings */
+h1, h2, h3, h4, h5, h6 {
+  font-family: "Merriweather", Georgia, serif; /* classic serif feel */
+  font-weight: 700;
+  color: #114e8b; 
+  letter-spacing: -0.2px;
+  line-height: 1.3;
+}
+
+/* Adjust heading sizes */
+h1 { font-size: 2.4rem; margin-bottom: 0.6rem; }
+h2 { font-size: 1.9rem; margin-bottom: 0.5rem; }
+h3 { font-size: 1.5rem; margin-bottom: 0.4rem; }
+
+/* Paragraphs / body text (match the second screenshot) */
+body, p, li {
+  font-family: "Inter", "Helvetica Neue", Arial, sans-serif;
+  font-size: 1rem;
+  color: #3c4a57; /* soft navy-grey for readability */
+  line-height: 1.7;
+}
+
+/* Optional: subtitles or muted text */
+.muted, small {
+  color: #303339; /* grey-blue */
+}
+
+/* Slightly bolder links */
+a {
+  color: #1d5db5;
+  text-decoration: none;
+}
+a:hover {
+  text-decoration: underline;
+}
+
+
+* { box-sizing: border-box; }
+body {
+  margin: 0;
+  font: 16px/1.5 ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, "Helvetica Neue", Arial;
+  color: var(--ink);
+  background: linear-gradient(#0d2840 0, #124b74 100%) fixed;
+}
+
+.hero {
+  background: linear-gradient(#e8f6fb, #fff);
+  border-bottom: 4px solid var(--accent);
+  box-shadow: var(--shadow);
+}
+.hero__inner {
+  max-width: 1100px; margin: 0 auto; padding: 28px 20px 18px;
+}
+h1 { margin: 0; font-size: 44px; letter-spacing: .5px; }
+.subtitle { margin: 6px 0 2px; color: var(--muted); }
+
+.container { max-width: 1100px; margin: 28px auto; padding: 0 18px 60px; }
+
+.panel {
+  background: var(--panel);
+  border-radius: 18px;
+  margin: 26px 0;
+  box-shadow: var(--shadow);
+  overflow: hidden;
+}
+.panel__title {
+  background: #f3fbfe;
+  border-bottom: 1px solid #e6f6fb;
+  padding: 10px 16px;
+  font-weight: 700;
+  color: #0e7490;
+  letter-spacing: .4px;
+}
+.panel__grid { display: grid; gap: 24px; padding: 18px; }
+.panel__grid--map { grid-template-columns: 1.4fr .6fr; }
+.panel__grid--two { grid-template-columns: 1.2fr .8fr; }
+.panel__grid--one { grid-template-columns: 1fr; }
+
+.aside__box {
+  border: 1px solid #e5e7eb; border-radius: 14px; padding: 14px; background: #fbfeff;
+}
+.muted { color: var(--muted); margin-top: 0 }
+.caption { color: var(--muted); font-size: 14px; margin: 8px 0 0; }
+
+h2 { margin: 6px 0 8px; }
+h3 { margin: 8px 0 6px; }
+
+.footer {
+  color: #e5f6fb; text-align: center; margin: 12px 0 10px;
+  opacity: .85; font-size: 14px;
+}
+
+/* Make embeds responsive */
+#map, #severity2018, #severity2019, #activityBar, #bubble, #treemap {
+  min-height: 380px;
+}
+
+/* make the white card roomy */
+.card, .panel, .viz-card {
+  width: 100%;
+}
+
+/* generic chart container */
+.vis {
+  width: 100%;
+  min-height: 520px;          /* <-- gives Vega a real height to fit into */
+}
+
+/* slightly taller for the map */
+.vis--wide { 
+  min-height: 580px;
+}
+
+/* make Vega-Embed stretch to its parent */
+.vis .vega-embed,
+.vis .vega-embed > .vega-view,
+.vis .vega-embed canvas,
+.vis .vega-embed svg {
+  width: 100% !important;
+  height: 100% !important;
+}
+
+/* remove any stray borders around the view */
+.vega-embed .mark-rect,
+.vega-embed .mark-group {
+  box-sizing: border-box;
+}
+
+/* optional: reduce padding inside the white box if it feels cramped */
+.card .card-body, .viz-card .content {
+  padding: 16px 20px;
+}
+
+/* ===== Center the hero title + subtitle ===== */
+.hero,
+.hero__inner{
+  text-align: center !important;
+}
+
+/* Title spacing */
+.mast__title{
+  margin: 0 0 10px !important;
+}
+
+/* Keep the subtitle to ~10 words per line */
+.muted{
+  /* Center it */
+  margin-left: auto !important;
+  margin-right: auto !important;
+
+  /* Limit line length:
+     ~10 words per line ≈ 36–42ch (characters).
+     Tweak between 34ch–42ch if you want fewer/more words. */
+  max-width: 70ch !important;
+
+  /* Comfortable reading */
+  line-height: 1.7 !important;
+}
+
+/* Activities grid: narrow text (left) + wide chart (right) */
+.panel__grid--act {
+  grid-template-columns: 0.9fr 1.6fr;   /* text | chart */
+  align-items: start;
+}
+
+/* Make the chart area roomier in this section */
+#activityBar.vis { min-height: 560px; }
+
+/* Ensure the embedded Vega view fills the box */
+.vis .vega-embed, .vis .vega-embed > .vega-view,
+.vis .vega-embed canvas, .vis .vega-embed svg {
+  width: 100% !important;
+  height: 100% !important;
+}
+
+/* Stack on narrow screens */
+@media (max-width: 900px) {
+  .panel__grid--act { grid-template-columns: 1fr; }
+  #activityBar.vis { min-height: 460px; }
+}
+
+.vega-bindings {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 12px;
+  gap: 12px;
+  font-size: 15px;
+}
+
+

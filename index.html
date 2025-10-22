@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Shark Attacks — 2018 & 2019</title>
+
+  <!-- Vega stack -->
+  <script src="https://cdn.jsdelivr.net/npm/vega@5"></script>
+  <script src="https://cdn.jsdelivr.net/npm/vega-lite@5"></script>
+  <script src="https://cdn.jsdelivr.net/npm/vega-embed@6"></script>
+
+  <link rel="stylesheet" href="styles.css" />
+  
+</head>
+<body>
+  <header class="hero hero--ombre">
+    <div class="hero__inner">
+      <h1 class="mast__title">Sharks, Shores &amp; Survivors</h1>
+      <p class="muted">Exploring where, when, and how shark attacks occurred in 2018-2019, across countries, activities, ages, and species, with context from population size.</p>
+    </div>
+  </header>
+
+  <main class="container">
+
+    <!-- ============ SECTION 1: MAP ============ -->
+    <section class="panel">
+      <div class="panel__title">Global Map</div>
+
+      <div class="panel__grid panel__grid--two">
+        <div class="panel__col panel__col--big">
+          <h2>Shark Attacks by Country</h2>
+          <p class="muted">
+            Use the slider to switch between <strong>2018</strong> and <strong>2019</strong>.
+            Each country is shaded on a blue scale by the number of recorded shark attacks in that year, darker = more incidents. Values are aggregated by country, so nations with long, surf-active coastlines may appear darker. Hover to see the exact country and count.
+          </p>
+          <div id="map" class="vis vis--xl"></div>
+        </div>
+
+        <aside class="panel__col panel__col--side">
+          <div class="card">
+            <h3>What the map shows</h3>
+            <p>In <strong> 2018</strong> shark attacks were heavily concentrated in a few key coastal regions, as shown on the map above. The darkest blue areas, <strong>Australia</strong> and the <strong> United States</strong>, recorded the highest number of incidents, reflecting their long coastlines and high levels of ocean activity. Moderate numbers occurred in <strong>Brazil, South Africa and New Zealand,</strong> while most other countries reported few or none. Overall, the map highlights how <strong>shark attacks in 2018 were unevenly distributed </strong>, clustering in warm, coastal environments where both sharks and humans are most active.</p>
+            <p>In <strong> 2019</strong>, shark attacks again clustered in a few coastal nations. The <strong> United States and Australia</strong> show the darkest blues, indicating the highest incident counts, with smaller but noticeable activity in <strong> South Africa, Brazil, Mexico, and New Zealand.</strong> Much of <strong> Europe and Asia</strong> remain pale or blank, reflecting minimal reports. Overall, the 2019 pattern mirrors 2018, where attacks are <strong>unevenly distributed</strong>, concentrated where warm-water coastlines and high ocean use overlap.</p>
+          </div>
+        </aside>
+      </div>
+    </section>
+
+    <!-- ============ SECTION 2: ACTIVITY (LEFT TEXT, RIGHT CHART) ============ -->
+    <!-- Section: What were people doing? -->
+      <section class="panel" id="activities">
+        <div class="panel__title">What were people doing?</div>
+
+        <div class="panel__grid panel__grid--act">
+          <!-- Left: narrative (narrow) -->
+          <aside class="aside">
+            <div class="aside__box">
+              <h2>Shark Attacks by Activity Type</h2>
+
+              <p>In <strong> 2018</strong>, most shark attacks occurred during high-contact water activities. 
+                <strong> Surfing</strong> saw by far the most incidents, followed by <strong> swimming and fishing</strong>. 
+                Smaller numbers were linked to activities like <strong> spearfishing, wading and diving.</strong>
+                This suggests that the <strong> greater the time spent in surf zones or near the water’s surface,</strong> the higher the likelihood of encountering a shark.</p>
+
+              <p>In <strong> 2019</strong>, most shark attacks occurred during <strong> surfing</strong>, followed by <strong> swimming and fishing</strong>. 
+                Smaller numbers were linked to <strong>snorkeling and spearfishing.</strong>
+                Overall, attacks were most common in <strong> surface-level water sports</strong>, where people spend more time in active ocean areas.</p>
+            </div>
+          </aside>
+
+          <!-- Right: the chart (wide) -->
+          <div id="activity" class="vis vis--wide"></div>
+        </div>
+
+      </section>
+
+
+    <!-- ==================== SECTION 3: AGE × COUNTRY × POPULATION ==================== -->
+    <section class="panel" id="age-country-pop">
+      <div class="panel__title">Age x Country x Population</div>
+
+      <div class="panel__grid panel__grid--one">
+        <div>
+          <!-- MOVE THE HEADING ABOVE THE CHART -->
+          <h2 class="panel__h2">Comparing Shark Attack Frequency by Age and Country Population</h2>
+
+          <!-- Full-width bubble chart -->
+          <div id="bubble" class="vis vis--xl"></div>
+
+          <!-- Description underneath -->
+          <div class="card card--inline chart-description">
+            <p>
+              In <strong>both 2018 and 2019</strong>, shark-attack incidents cluster overwhelmingly at <strong>one attack</strong> per country-age group, with smaller secondary clusters at <strong>two</strong>, and only occasional points at <strong> three</strong>, mainly in high-exposure countries. 
+              The <strong>modal ages sit in the late-teens to 30s</strong>, consistent with the group most active in surf and open-water sports, 
+              2019 shows a slightly <strong> wider spread into the 40-60+ ranges</strong>. Bubble size (population) highlights the <strong>United States</strong> and to a lesser extent <strong>Australia</strong> as the largest contributors to total incidents, 
+              reflecting exposure rather than per-capita risk. Overall, the pattern is <strong>stable across years</strong>, attacks concentrate where coastal populations and ocean recreation are high,  with age skewed toward active adult cohorts.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+
+   
+      <!-- Section 4: Which Species -->
+      <section class="panel" id="species-section">
+        <div class="panel__title">Which Species?</div>
+
+        <!-- Title + Description (aligned to chart width) -->
+        <div class="species-header">
+          <h2 class="species-title">Species Proportion of Attacks</h2>
+          <p class="species-text">
+            This treemap shows the <strong>share of recorded attacks by species</strong> for the selected year.
+            <strong>Larger rectangles</strong> indicate species that appear more frequently in the dataset, while
+            smaller ones indicate rarer appearances. Click <strong>2018</strong> or <strong>2019</strong> to switch years.
+          </p>
+        </div>
+
+        <!-- Treemap Visualization -->
+        <div id="treemap" class="vis vis--tall"></div>
+
+      </section>
+
+
+
+
+    <footer class="footer">
+      Data Sources: https://www.kaggle.com/datasets/thedevastator/global-shark-attack-incidents & https://www.kaggle.com/datasets/kuntalmaity/world-population-data 
+    </footer>
+  </main>
+
+  <script src="main.js"></script>
+</body>
+</html>

@@ -1,0 +1,75 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "width": "container",
+  "height": 520,
+  "autosize": { "type": "fit", "contains": "padding", "resize": true },
+    "title": { "text": { "expr": "'Age vs. Number of Attacks — ' + yearBub" } },
+    "config": {
+    "title": {
+        "font": "Merriweather", 
+        "fontSize": 24,
+        "fontWeight": 700,
+        "color": "#114e8b"
+    }
+  },
+
+  "params": [
+    {
+      "name": "yearBub",
+      "value": 2018,
+      "bind": { "input": "range", "min": 2018, "max": 2019, "step": 1, "name": "yearBub" }
+    }
+  ],
+
+  "data": { "url": "data/SharkAttacks_Population_Merged.csv", "format": { "type": "csv" } },
+
+  "transform": [
+    { "calculate": "toNumber(datum['Year'])", "as": "YearN" },
+    { "filter": "datum.YearN == yearBub" },
+    { "filter": "isValid(datum['Age'])" },
+
+    { "calculate": "toNumber(datum['Country\\'s Population that year '])", "as": "Pop" },
+
+    {
+      "aggregate": [
+        { "op": "count", "as": "Attacks" },
+        { "op": "max", "field": "Pop", "as": "PopMax" }
+      ],
+      "groupby": ["Country", "Age"]
+    }
+  ],
+
+  "mark": { "type": "circle", "opacity": 0.85 },
+
+  "encoding": {
+    "x": {
+      "field": "Attacks",
+      "type": "quantitative",
+      "title": "Number of attacks (Country × Age)",
+      "scale": { "domain": [0.8, 3.2], "nice": false }
+    },
+    "y": { "field": "Age", "type": "quantitative", "title": "Age" },
+
+    "color": { "field": "Country", "type": "nominal", "legend": { "title": "Country" } },
+
+    "size": {
+      "field": "PopMax",
+      "type": "quantitative",
+      "scale": { "type": "sqrt", "domain": [0, 400000000], "clamp": true },
+      "legend": {
+        "title": "Population",
+        "values": [0, 100000000, 200000000, 300000000, 400000000],
+        "format": ".0s",
+        "symbolType": "circle",
+        "gradientLength": 140
+      }
+    },
+
+    "tooltip": [
+      { "field": "Country", "title": "Country" },
+      { "field": "Age", "title": "Age" },
+      { "field": "Attacks", "title": "Attacks" },
+      { "field": "PopMax", "title": "Population", "format": ",.0f" }
+    ]
+  }
+}
